@@ -4,10 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
-
-
 @Entity
 @Table(name = "books")
 public class Book {
