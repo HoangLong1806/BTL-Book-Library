@@ -1,0 +1,4 @@
+ # CMD axonserver: vô thẳng folder axonserver
+	java -jar axonserver.jar
+# CMD Kafka 
+	
