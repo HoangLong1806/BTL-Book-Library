@@ -18,17 +18,12 @@ import com.example.borrowingservice.command.api.model.BorrowRequestModel;
 
 @RestController
 @RequestMapping("/api/v1/borrowing")
-@EnableBinding(Source.class)
 public class BorrowCommandController {
-
 	@Autowired
 	private CommandGateway commandGateway;
 	
 //	@Autowired
-//	private IBorrowService borrowService;
-	
-	@Autowired
-	private MessageChannel output;
+//	private BorrowService borrowService;
 	
 	@PostMapping
 	public String addBookBorrowing(@RequestBody BorrowRequestModel model) {
@@ -49,17 +44,4 @@ public class BorrowCommandController {
 //		commandGateway.sendAndWait(command);
 //		return "Book returned";
 //	}
-//	@PostMapping("/sendMessage")
-//	public void SendMessage(@RequestBody Message message) {
-//		try {
-//			
-//			ObjectMapper mapper = new ObjectMapper();
-//			String json = mapper.writeValueAsString(message);
-//			output.send(MessageBuilder.withPayload(json).build());
-//		} catch (JsonProcessingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-	
 }

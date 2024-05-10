@@ -4,12 +4,10 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "borrowing")
-
 public class Borrowing {
 	@Id
 	private String id;
@@ -51,6 +49,4 @@ public class Borrowing {
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
-	
-	
 }

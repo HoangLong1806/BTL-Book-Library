@@ -20,8 +20,6 @@ import com.example.borrowingservice.command.api.events.BorrowingUpdateBookReturn
 
 @Aggregate
 public class BorrowAggregate {
-	
-
 	@AggregateIdentifier
 	private String id;
 	
@@ -39,27 +37,6 @@ public class BorrowAggregate {
 		BeanUtils.copyProperties(command, event);
 		AggregateLifecycle.apply(event);
 	}
-	@CommandHandler
-	public void handle(UpdateBookReturnCommand command) {
-		BorrowingUpdateBookReturnEvent event = new BorrowingUpdateBookReturnEvent();
-		BeanUtils.copyProperties(command, event);
-		AggregateLifecycle.apply(event);
-	}
-	
-	@CommandHandler
-	public void handle(DeleteBorrowCommand command) {
-		BorrowDeletedEvent event = new BorrowDeletedEvent();
-		BeanUtils.copyProperties(command, event);
-		AggregateLifecycle.apply(event);
-	}
-	@CommandHandler
-	public void handle(SendMessageCommand command) {
-		BorrowSendMessageEvent event = new BorrowSendMessageEvent();
-		BeanUtils.copyProperties(command, event);
-		AggregateLifecycle.apply(event);
-	}
-	
-	
 	@EventSourcingHandler
 	public void on(BorrowCreatedEvent event) {
 		this.bookId = event.getBookId();
@@ -68,9 +45,33 @@ public class BorrowAggregate {
 		this.id = event.getId();
 	
 	}
+	@CommandHandler
+	public void handle(DeleteBorrowCommand command) {
+		BorrowDeletedEvent event = new BorrowDeletedEvent();
+		BeanUtils.copyProperties(command, event);
+		AggregateLifecycle.apply(event);
+	}
 	@EventSourcingHandler
 	public void on(BorrowDeletedEvent event) {
 		this.id = event.getId();
+	}
+	@CommandHandler
+	public void handle(SendMessageCommand command) {
+		BorrowSendMessageEvent event = new BorrowSendMessageEvent();
+		BeanUtils.copyProperties(command, event);
+		AggregateLifecycle.apply(event);
+	}
+	@EventSourcingHandler
+	public void on(BorrowSendMessageEvent event) {
+		this.id = event.getId();
+		this.message = event.getMessage();
+		this.employeeId = event.getEmployeeId();
+	}
+	@CommandHandler
+	public void handle(UpdateBookReturnCommand command) {
+		BorrowingUpdateBookReturnEvent event = new BorrowingUpdateBookReturnEvent();
+		BeanUtils.copyProperties(command, event);
+		AggregateLifecycle.apply(event);
 	}
 	@EventSourcingHandler
 	public void on(BorrowingUpdateBookReturnEvent event) {
@@ -78,11 +79,5 @@ public class BorrowAggregate {
 		this.returnDate = event.getReturnDate();
 		this.bookId = event.getBookId();
 		this.employeeId = event.getEmployee();
-	}
-	@EventSourcingHandler
-	public void on(BorrowSendMessageEvent event) {
-		this.id = event.getId();
-		this.message = event.getMessage();
-		this.employeeId = event.getEmployeeId();
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.bookservice.command.data.Book;
 import com.example.bookservice.command.data.BookRepository;
+import com.example.commonservice.event.BookUpdateStatusEvent;
 @Component
 public class BookEventsHandler {
 	@Autowired
@@ -31,5 +32,10 @@ public class BookEventsHandler {
     public void on(BookDeletedEvent event) {
        bookRepository.deleteById(event.getBookId());
     }
-	
+	@EventHandler
+	public void on(BookUpdateStatusEvent event) {
+		Book book = bookRepository.getById(event.getBookId());
+		book.setIsReady(event.getIsReady());
+		bookRepository.save(book);
+	}
 }

@@ -1,4 +1,5 @@
 package com.example.borrowingservice.command.api.command;
+
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 public class SendMessageCommand {
@@ -31,7 +32,4 @@ public class SendMessageCommand {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
-	
 }

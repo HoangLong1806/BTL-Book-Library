@@ -3,7 +3,6 @@ package com.example.borrowingservice.command.api.events;
 import java.util.Date;
 
 public class BorrowingUpdateBookReturnEvent {
-
 	private String id;
 	private String bookId;
 	private String employee;
@@ -32,5 +31,4 @@ public class BorrowingUpdateBookReturnEvent {
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
-	
 }
