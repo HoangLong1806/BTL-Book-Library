@@ -8,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.commonservice.model.EmployeeResponseCommonModel;
+import com.example.commonservice.query.GetDetailsEmployeeQuery;
 import com.example.employeeservice.command.data.Employee;
 import com.example.employeeservice.command.data.EmployeeRepository;
 import com.example.employeeservice.query.model.EmployeeReponseModel;
@@ -28,14 +30,14 @@ public class EmployeeProjection {
 		return model;
 	}
 
-//	@QueryHandler
-//	public EmployeeResponseCommonModel handle(GetDetailsEmployeeQuery getDetailsEmployeeQuery) {
-//		EmployeeResponseCommonModel model = new EmployeeResponseCommonModel();
-//		Employee employee = employeeRepository.getById(getDetailsEmployeeQuery.getEmployeeId());
-//		BeanUtils.copyProperties(employee, model);
-//
-//		return model;
-//	}
+	@QueryHandler
+	public EmployeeResponseCommonModel handle(GetDetailsEmployeeQuery getDetailsEmployeeQuery) {
+		EmployeeResponseCommonModel model = new EmployeeResponseCommonModel();
+		Employee employee = employeeRepository.getById(getDetailsEmployeeQuery.getEmployeeId());
+		BeanUtils.copyProperties(employee, model);
+
+		return model;
+	}
 
 	@QueryHandler
 	public List<EmployeeReponseModel> handle(GetAllEmployeeQuery getAllEmployeeQuery) {

@@ -16,9 +16,11 @@ import com.example.borrowingservice.query.model.BorrowingResponseModel;
 import com.example.borrowingservice.query.queries.GetAllBorrowing;
 import com.example.borrowingservice.query.queries.GetListBorrowingByEmployeeQuery;
 import com.example.commonservice.model.BookResponseCommonModel;
+import com.example.commonservice.model.BorrowingResponseCommonModel;
 import com.example.commonservice.model.EmployeeResponseCommonModel;
 import com.example.commonservice.query.GetDetailsBookQuery;
 import com.example.commonservice.query.GetDetailsEmployeeQuery;
+import com.example.commonservice.query.GetListBorrowingByEmployee;
 
 @Component
 public class BorrowingProjection {
@@ -42,17 +44,17 @@ public class BorrowingProjection {
 		});
 		return list;
 	}
-//	@QueryHandler
-//	public List<BorrowingResponseCommonModel> handle(GetListBorrowingByEmployee query){
-//		List<BorrowingResponseCommonModel> list  = new ArrayList<>();
-//		List<Borrowing> listEntity = borrowRepository.findByEmployeeIdAndReturnDateIsNull(query.getEmployeeId());
-//		listEntity.forEach(s ->{
-//			BorrowingResponseCommonModel model = new BorrowingResponseCommonModel();
-//			BeanUtils.copyProperties(s, model);
-//			list.add(model);
-//		});
-//		return list;
-//	}
+	@QueryHandler
+	public List<BorrowingResponseCommonModel> handle(GetListBorrowingByEmployee query){
+		List<BorrowingResponseCommonModel> list  = new ArrayList<>();
+		List<Borrowing> listEntity = borrowRepository.findByEmployeeIdAndReturnDateIsNull(query.getEmployeeId());
+		listEntity.forEach(s ->{
+			BorrowingResponseCommonModel model = new BorrowingResponseCommonModel();
+			BeanUtils.copyProperties(s, model);
+			list.add(model);
+		});
+		return list;
+	}
 	@QueryHandler
 	public List<BorrowingResponseModel> handle(GetAllBorrowing query){
 		List<BorrowingResponseModel> list  = new ArrayList<>();

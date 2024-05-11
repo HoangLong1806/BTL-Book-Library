@@ -26,14 +26,14 @@ public class BorrowingEventsHandler {
 		borrowRepository.save(model);
 	}
 
-	@EventHandler
-	public void on(BorrowDeletedEvent event) {
-		if (borrowRepository.findById(event.getId()).isPresent()) {
-			borrowRepository.deleteById(event.getId());
-		} else
-			return;
-
-	}
+//	@EventHandler
+//	public void on(BorrowDeletedEvent event) {
+//		if (borrowRepository.findById(event.getId()).isPresent()) {
+//			borrowRepository.deleteById(event.getId());
+//		} else
+//			return;
+//
+//	}
 
 //	@EventHandler
 //	public void on(BorrowSendMessageEvent event) {
@@ -41,11 +41,11 @@ public class BorrowingEventsHandler {
 //		borrowService.sendMessage(message);
 //	}
 
-	@EventHandler
-	public void on(BorrowingUpdateBookReturnEvent event) {
-		Borrowing model = borrowRepository.findByEmployeeIdAndBookIdAndReturnDateIsNull(event.getEmployee(),
-				event.getBookId());
-		model.setReturnDate(event.getReturnDate());
-		borrowRepository.save(model);
-	}
+//	@EventHandler
+//	public void on(BorrowingUpdateBookReturnEvent event) {
+//		Borrowing model = borrowRepository.findByEmployeeIdAndBookIdAndReturnDateIsNull(event.getEmployee(),
+//				event.getBookId());
+//		model.setReturnDate(event.getReturnDate());
+//		borrowRepository.save(model);
+//	}
 }
