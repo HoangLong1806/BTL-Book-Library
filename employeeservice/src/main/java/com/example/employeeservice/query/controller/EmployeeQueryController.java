@@ -1,5 +1,6 @@
 package com.example.employeeservice.query.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.axonframework.messaging.responsetypes.ResponseTypes;
@@ -10,6 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.commonservice.model.BookResponseCommonModel;
+import com.example.commonservice.model.BorrowingResponseCommonModel;
+import com.example.commonservice.query.GetListBookQuery;
+import com.example.commonservice.query.GetListBorrowingByEmployee;
 import com.example.employeeservice.query.model.EmployeeReponseModel;
 import com.example.employeeservice.query.queries.GetAllEmployeeQuery;
 import com.example.employeeservice.query.queries.GetEmployeesQuery;
@@ -38,31 +43,31 @@ public class EmployeeQueryController {
 				.join();
 		return list;
 	}
-//	@GetMapping("/{employeeId}/books")
-//	public List<BookResponseCommonModel> getEmployeeBorrowedBook(@PathVariable String employeeId){
-//		
-//		
-//		//get List Borrowing 
-//		GetListBorrowingByEmployee getListBorrowingByEmployee = new GetListBorrowingByEmployee();
-//		getListBorrowingByEmployee.setEmployeeId(employeeId);
-//		List<BorrowingResponseCommonModel> listBorrowing = 
-//		 queryGateway.query(getListBorrowingByEmployee, ResponseTypes.multipleInstancesOf(BorrowingResponseCommonModel.class))
-//		 .join();
-//	
-//		//Get list book
-//		List<BookResponseCommonModel> listBook = 
-//				queryGateway.query(new GetListBookQuery(), ResponseTypes.multipleInstancesOf(BookResponseCommonModel.class))
-//				.join();
-//		
-//		
-//		
-//		List<BookResponseCommonModel> listTemp = new ArrayList<>();
-//		
-//		listTemp = listBook.stream()
-//				.filter(x -> listBorrowing.stream().anyMatch(y -> y.getBookId().equals(x.getBookId()))).toList();
-//		
-//		
-//		
-//		return listTemp;
-//	}
+	@GetMapping("/{employeeId}/books")
+	public List<BookResponseCommonModel> getEmployeeBorrowedBook(@PathVariable String employeeId){
+		
+		
+		//get List Borrowing 
+		GetListBorrowingByEmployee getListBorrowingByEmployee = new GetListBorrowingByEmployee();
+		getListBorrowingByEmployee.setEmployeeId(employeeId);
+		List<BorrowingResponseCommonModel> listBorrowing = 
+		 queryGateway.query(getListBorrowingByEmployee, ResponseTypes.multipleInstancesOf(BorrowingResponseCommonModel.class))
+		 .join();
+	
+		//Get list book
+		List<BookResponseCommonModel> listBook = 
+				queryGateway.query(new GetListBookQuery(), ResponseTypes.multipleInstancesOf(BookResponseCommonModel.class))
+				.join();
+		
+		
+		
+		List<BookResponseCommonModel> listTemp = new ArrayList<>();
+		
+		listTemp = listBook.stream()
+				.filter(x -> listBorrowing.stream().anyMatch(y -> y.getBookId().equals(x.getBookId()))).toList();
+		
+		
+		
+		return listTemp;
+	}
 }

@@ -9,7 +9,7 @@ import com.thoughtworks.xstream.XStream;
 public class AxonConfig {
  
     @Bean
-    public XStream xStream() {
+    XStream xStream() {
         XStream xStream = new XStream();
       
         xStream.allowTypesByWildcard(new String[] {

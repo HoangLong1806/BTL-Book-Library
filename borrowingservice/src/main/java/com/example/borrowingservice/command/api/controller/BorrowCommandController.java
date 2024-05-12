@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.borrowingservice.command.api.command.CreateBorrowCommand;
+import com.example.borrowingservice.command.api.command.UpdateBookReturnCommand;
 import com.example.borrowingservice.command.api.model.BorrowRequestModel;
+import com.example.borrowingservice.command.api.model.Message;
+import com.example.borrowingservice.command.api.service.BorrowService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/api/v1/borrowing")
@@ -22,8 +28,8 @@ public class BorrowCommandController {
 	@Autowired
 	private CommandGateway commandGateway;
 	
-//	@Autowired
-//	private BorrowService borrowService;
+	@Autowired
+	private BorrowService borrowService;
 	
 	@PostMapping
 	public String addBookBorrowing(@RequestBody BorrowRequestModel model) {
@@ -38,10 +44,22 @@ public class BorrowCommandController {
 		
 		return "Book borrowing added";
 	}
-//	@PutMapping
-//	public String updateBookReturn(@RequestBody BorrowRequestModel model) {
-//		UpdateBookReturnCommand command = new UpdateBookReturnCommand(borrowService.findIdBorrowing(model.getEmployeeId(), model.getBookId()), model.getBookId(),model.getEmployeeId(),new Date());
-//		commandGateway.sendAndWait(command);
-//		return "Book returned";
+	@PutMapping
+	public String updateBookReturn(@RequestBody BorrowRequestModel model) {
+		UpdateBookReturnCommand command = new UpdateBookReturnCommand(borrowService.findIdBorrowing(model.getEmployeeId(), model.getBookId()), model.getBookId(),model.getEmployeeId(),new Date());
+		commandGateway.sendAndWait(command);
+		return "Book returned";
+	}
+//	@PostMapping("/sendMessage")
+//	public void SendMessage(@RequestBody Message message) {
+//		try {
+//			
+//			ObjectMapper mapper = new ObjectMapper();
+//			String json = mapper.writeValueAsString(message);
+//			output.send(MessageBuilder.withPayload(json).build());
+//		} catch (JsonProcessingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 //	}
 }

@@ -18,29 +18,28 @@ import com.example.employeeservice.query.queries.GetEmployeesQuery;
 
 @Component
 public class EmployeeProjection {
+
 	@Autowired
 	private EmployeeRepository employeeRepository;
-
+	
 	@QueryHandler
-	public EmployeeReponseModel handle(GetEmployeesQuery getEmployeesQuery) {
+    public EmployeeReponseModel handle(GetEmployeesQuery getEmployeesQuery) {
 		EmployeeReponseModel model = new EmployeeReponseModel();
-		Employee employee = employeeRepository.getById(getEmployeesQuery.getEmployeeId());
-		BeanUtils.copyProperties(employee, model);
+	 Employee employee = employeeRepository.getById(getEmployeesQuery.getEmployeeId());
+      BeanUtils.copyProperties(employee, model);
 
-		return model;
-	}
-
+        return model;
+    }
 	@QueryHandler
-	public EmployeeResponseCommonModel handle(GetDetailsEmployeeQuery getDetailsEmployeeQuery) {
+    public EmployeeResponseCommonModel handle(GetDetailsEmployeeQuery getDetailsEmployeeQuery) {
 		EmployeeResponseCommonModel model = new EmployeeResponseCommonModel();
-		Employee employee = employeeRepository.getById(getDetailsEmployeeQuery.getEmployeeId());
-		BeanUtils.copyProperties(employee, model);
+	 Employee employee = employeeRepository.getById(getDetailsEmployeeQuery.getEmployeeId());
+      BeanUtils.copyProperties(employee, model);
 
-		return model;
-	}
-
+        return model;
+    }
 	@QueryHandler
-	public List<EmployeeReponseModel> handle(GetAllEmployeeQuery getAllEmployeeQuery) {
+	public List<EmployeeReponseModel> handle(GetAllEmployeeQuery getAllEmployeeQuery){
 		List<EmployeeReponseModel> listModel = new ArrayList<>();
 		List<Employee> listEntity = employeeRepository.findAll();
 		listEntity.stream().forEach(s -> {
