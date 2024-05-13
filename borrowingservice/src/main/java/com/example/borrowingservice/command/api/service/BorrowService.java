@@ -2,6 +2,9 @@ package com.example.borrowingservice.command.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import com.example.borrowingservice.command.api.data.BorrowRepository;
@@ -9,19 +12,17 @@ import com.example.borrowingservice.command.api.model.Message;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.springframework.cloud.stream.messaging.Source;
-import org.springframework.integration.support.MessageBuilder;
-import org.springframework.messaging.MessageChannel;
 @Service
 @EnableBinding(Source.class)
-public class BorrowService {
+public class BorrowService implements IBorrowService{
+
 	@Autowired
 	private BorrowRepository repository;
 	
 	@Autowired
 	private MessageChannel output;
 	
-
+	@Override
 	public void sendMessage(Message message) {
 		try {
 			
@@ -35,9 +36,10 @@ public class BorrowService {
 		
 	}
 
-	
+	@Override
 	public String findIdBorrowing(String employeeId, String bookId) {
 		
 	return	repository.findByEmployeeIdAndBookIdAndReturnDateIsNull(employeeId,bookId).getId();
 	}
+
 }

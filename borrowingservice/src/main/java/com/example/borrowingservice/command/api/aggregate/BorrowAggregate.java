@@ -22,6 +22,8 @@ import lombok.Data;
 
 @Aggregate
 public class BorrowAggregate {
+	
+
 	@AggregateIdentifier
 	private String id;
 	
@@ -85,5 +87,4 @@ public class BorrowAggregate {
 		this.message = event.getMessage();
 		this.employeeId = event.getEmployeeId();
 	}
-
 }

@@ -20,22 +20,22 @@ public class BorrowingQueryController {
 
 	@Autowired
 	private QueryGateway queryGateway;
-	
+
 	@GetMapping("/{employeeId}")
-	public List<BorrowingResponseModel> getBorrowingByEmployee(@PathVariable String employeeId){
+	public List<BorrowingResponseModel> getBorrowingByEmployee(@PathVariable String employeeId) {
 		GetListBorrowingByEmployeeQuery getBorrowingQuery = new GetListBorrowingByEmployeeQuery();
 		getBorrowingQuery.setEmployeeId(employeeId);
-		
-		List<BorrowingResponseModel> list = 
-			queryGateway.query(getBorrowingQuery, ResponseTypes.multipleInstancesOf(BorrowingResponseModel.class))
-			.join();
-		
+
+		List<BorrowingResponseModel> list = queryGateway
+				.query(getBorrowingQuery, ResponseTypes.multipleInstancesOf(BorrowingResponseModel.class)).join();
+
 		return list;
 	}
+
 	@GetMapping
-	public List<BorrowingResponseModel> getAllBorrowing(){
-		List<BorrowingResponseModel> list = queryGateway.query(new GetAllBorrowing(), ResponseTypes.multipleInstancesOf(BorrowingResponseModel.class))
-				.join();
+	public List<BorrowingResponseModel> getAllBorrowing() {
+		List<BorrowingResponseModel> list = queryGateway
+				.query(new GetAllBorrowing(), ResponseTypes.multipleInstancesOf(BorrowingResponseModel.class)).join();
 		return list;
 	}
 }

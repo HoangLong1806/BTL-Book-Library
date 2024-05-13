@@ -32,4 +32,7 @@ public class SendMessageCommand {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
+	
+	
 }

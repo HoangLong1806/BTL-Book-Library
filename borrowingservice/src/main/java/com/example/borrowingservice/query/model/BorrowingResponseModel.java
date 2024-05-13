@@ -54,5 +54,4 @@ public class BorrowingResponseModel {
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
-	
 }

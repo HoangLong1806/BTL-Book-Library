@@ -10,6 +10,4 @@ public class GetListBorrowingByEmployeeQuery {
 	public void setEmployeeId(String employeeId) {
 		this.employeeId = employeeId;
 	}
-	
-	
 }

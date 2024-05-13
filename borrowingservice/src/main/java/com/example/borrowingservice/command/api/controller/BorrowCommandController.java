@@ -19,17 +19,23 @@ import com.example.borrowingservice.command.api.command.UpdateBookReturnCommand;
 import com.example.borrowingservice.command.api.model.BorrowRequestModel;
 import com.example.borrowingservice.command.api.model.Message;
 import com.example.borrowingservice.command.api.service.BorrowService;
+import com.example.borrowingservice.command.api.service.IBorrowService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/api/v1/borrowing")
+@EnableBinding(Source.class)
 public class BorrowCommandController {
+
 	@Autowired
 	private CommandGateway commandGateway;
 	
 	@Autowired
-	private BorrowService borrowService;
+	private IBorrowService borrowService;
+	
+	@Autowired
+	private MessageChannel output;
 	
 	@PostMapping
 	public String addBookBorrowing(@RequestBody BorrowRequestModel model) {
@@ -50,16 +56,17 @@ public class BorrowCommandController {
 		commandGateway.sendAndWait(command);
 		return "Book returned";
 	}
-//	@PostMapping("/sendMessage")
-//	public void SendMessage(@RequestBody Message message) {
-//		try {
-//			
-//			ObjectMapper mapper = new ObjectMapper();
-//			String json = mapper.writeValueAsString(message);
-//			output.send(MessageBuilder.withPayload(json).build());
-//		} catch (JsonProcessingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	@PostMapping("/sendMessage")
+	public void SendMessage(@RequestBody Message message) {
+		try {
+			
+			ObjectMapper mapper = new ObjectMapper();
+			String json = mapper.writeValueAsString(message);
+			output.send(MessageBuilder.withPayload(json).build());
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }

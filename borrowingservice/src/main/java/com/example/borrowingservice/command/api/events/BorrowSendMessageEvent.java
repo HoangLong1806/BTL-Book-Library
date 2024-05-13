@@ -40,4 +40,5 @@ public class BorrowSendMessageEvent {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
 }
