@@ -11,20 +11,20 @@ spring:
           uri: http://localhost:9001
           predicates:
             - Path=/api/v1/books/**
-#          filters:
-#            - AuthFilter
+          filters:
+            - AuthFilter
         - id: employeeservice
           uri: http://localhost:9002
           predicates:
             - Path=/api/v1/employees/**
-#          filters:
-#            - AuthFilter
+          filters:
+            - AuthFilter
         - id: borrowservice
           uri: http://localhost:9003
           predicates:
             - Path=/api/v1/borrowing/**
-#          filters:
-#            - AuthFilter
+          filters:
+            - AuthFilter
         - id: userservice
           uri: http://localhost:9004
           predicates:
